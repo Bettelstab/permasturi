@@ -1,7 +1,10 @@
 import LanguageSwitcher from "lib/languageSwitcher";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default () => {
+  const t = useTranslations("navigation");
+
   return (
     <nav>
       <ul>
@@ -9,10 +12,10 @@ export default () => {
           <Link href="/">🏠</Link>
         </li>
         <li>
-          <Link href="/about">About</Link>
+          <Link href="/about">{t("about")}</Link>
         </li>
         <li>
-          <Link href="/contact">Contact</Link>
+          <Link href="/contact">{t("contact")}</Link>
         </li>
         <li>
             <LanguageSwitcher />
@@ -21,3 +24,12 @@ export default () => {
     </nav>
   );
 };
+
+export async function getStaticProps({locale}: {locale: string}) {
+  return {
+    props: {
+      messages: (await import(`translations/${locale}.json`)).default
+    }
+  };
+}
+
