@@ -12,6 +12,9 @@ datasource db {
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
+    // For PlanetScale we disable foreign keys
+    // Read more: https://www.prisma.io/docs/guides/database/using-prisma-with-planetscale
+    relationMode = "prisma"
 }
 
 model Example {
@@ -36,6 +39,8 @@ model Account {
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+    @@index([userId])
+
     @@unique([provider, providerAccountId])
 }
 
@@ -45,6 +50,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
@@ -55,6 +62,13 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    role          Role @default(User)
+}
+
+enum Role {
+    User
+    Admin
+    Owner
 }
 
 model VerificationToken {
