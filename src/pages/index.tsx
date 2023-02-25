@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 
 import Navigation from "lib/layout/Navigation";
 import { api } from "utils/api";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const t = useTranslations("home");
@@ -56,6 +57,9 @@ const AuthShowcase: React.FC = () => {
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
         {secretMessage && <span> - {secretMessage}</span>}
       </p>
+      <p>
+        Visit user list: <Link href="/users">Go</Link>
+      </p>
       <button
         className={styles.loginButton}
         onClick={sessionData ? () => void signOut() : () => void signIn()}
@@ -69,9 +73,6 @@ const AuthShowcase: React.FC = () => {
 export async function getStaticProps({locale}: {locale: string}) {
   return {
     props: {
-      // You can get the messages from anywhere you like. The recommended
-      // pattern is to put them in JSON files separated by language and read
-      // the desired one based on the `locale` received from Next.js.
       messages: (await import(`translations/${locale}.json`)).default
     }
   };

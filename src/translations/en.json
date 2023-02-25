@@ -13,5 +13,8 @@
     "en": "English",
     "de": "Deutsch",
     "es": "Español"
+  },
+  "users": {
+    "title": "Users"
   }
 }
