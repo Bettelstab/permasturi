@@ -1,0 +1,11 @@
+{
+  "home": {
+    "title": "Bienvenido a Permasturi",
+    "example": "Este es un texto de ejemplo."
+  },
+  "navigation": {
+    "home": "Inicio",
+    "about": "Sobre nosotros",
+    "contact": "Contacto"
+  }
+}

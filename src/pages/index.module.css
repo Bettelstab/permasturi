@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-image: linear-gradient(to bottom, #2e026d, #15162c);
 }
 
 .container {
@@ -53,17 +52,12 @@
   font-weight: 800;
   letter-spacing: -0.025em;
   margin: 0;
-  color: white;
 }
 
 @media (min-width: 640px) {
   .title {
     font-size: 5rem;
   }
-}
-
-.pinkSpan {
-  color: hsl(280 100% 70%);
 }
 
 .cardRow {
@@ -91,7 +85,6 @@
   gap: 1rem;
   padding: 1rem;
   border-radius: 0.75rem;
-  color: white;
   background-color: rgb(255 255 255 / 0.1);
 }
 
@@ -120,7 +113,6 @@
 }
 
 .showcaseText {
-  color: white;
   text-align: center;
   font-size: 1.5rem;
   line-height: 2rem;
@@ -139,7 +131,6 @@
   background-color: rgb(255 255 255 / 0.1);
   padding: 0.75rem 2.5rem;
   font-weight: 600;
-  color: white;
   text-decoration-line: none;
   transition: background-color 150ms cubic-bezier(0.5, 0, 0.2, 1);
 }

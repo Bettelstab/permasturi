@@ -1,0 +1,17 @@
+{
+  "home": {
+    "title": "Welcome to Permasturi",
+    "example": "This is an example text."
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "languageSwitcher": {
+    "switchLocale": "Switch locale",
+    "en": "English",
+    "de": "Deutsch",
+    "es": "Español"
+  }
+}
