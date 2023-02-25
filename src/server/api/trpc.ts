@@ -18,6 +18,7 @@
  */
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
+import { Role } from "@prisma/client";
 
 import { getServerAuthSession } from "../auth";
 import { prisma } from "../db";
@@ -52,6 +53,19 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
   // Get the session from the server using the unstable_getServerSession wrapper function
   const session = await getServerAuthSession({ req, res });
+
+  if (session?.user?.id) {
+    // If the user is logged in, we can use the session to get their role
+    const user = await prisma.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
+    });
+
+    if (user) {
+      session.user.role = user.role;
+    }
+  }
 
   return createInnerTRPCContext({
     session,
@@ -100,17 +114,23 @@ export const publicProcedure = t.procedure;
  * Reusable middleware that enforces users are logged in before running the
  * procedure
  */
-const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
-  if (!ctx.session || !ctx.session.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
-  }
-  return next({
-    ctx: {
-      // infers the `session` as non-nullable
-      session: { ...ctx.session, user: ctx.session.user },
-    },
+const enforceUserIsAuthed = (roleRequirement?: Role[]) =>
+  t.middleware(async ({ ctx, next }) => {
+    if (!ctx.session || !ctx.session.user) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    if (roleRequirement) {
+      if (!roleRequirement.includes(ctx.session.user.role))
+        throw new TRPCError({ code: "FORBIDDEN" });
+    }
+
+    return next({
+      ctx: {
+        // infers the `session` as non-nullable
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
   });
-});
 
 /**
  * Protected (authed) procedure
@@ -121,4 +141,18 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  *
  * @see https://trpc.io/docs/procedures
  */
-export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+export const protectedProcedure = t.procedure.use(enforceUserIsAuthed());
+
+/**
+ * Protected procedure for admin (or owner) users
+ */
+export const adminProcedure = t.procedure.use(
+  enforceUserIsAuthed([Role.Admin, Role.Owner])
+);
+
+/**
+ * Protected procedure for owner users
+ */
+export const ownerProcedure = t.procedure.use(
+  enforceUserIsAuthed([Role.Owner])
+);
