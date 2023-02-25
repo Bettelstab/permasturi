@@ -1,6 +1,19 @@
 # permasturi
 Based on Create T3 App
 
+# Requisites
+- Install mkcert and nss (latter for Firefox). See: https://github.com/FiloSottile/mkcert
+- Install [local-ssl-proxy](https://www.npmjs.com/package/local-ssl-proxy)
+
+# Run
+- `pnpm run dev`
+
+# Database changes
+- Change schema in prima/schema.prisma
+- Run `pnpm prisma db push`
+
+# T3 Stack information
+
 This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
 ## What's next? How do I make an app with this?
