@@ -9,4 +9,9 @@ declare module "next-auth" {
       id: string;
     } & DefaultSession["user"];
   }
+
+  /** The OAuth profile returned from your provider */
+  interface Profile {
+    email_verified: boolean;
+  }
 }
