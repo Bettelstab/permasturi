@@ -1,8 +1,10 @@
 import { NextPage } from "next";
 import { useTranslations } from "next-intl";
 import Head from "next/head";
+import { Role } from "@prisma/client";
 
 import Navigation from "lib/layout/Navigation";
+import { parseRole } from "utils/parseRole";
 import { api } from "utils/api";
 import styles from "./Users.module.css";
 
@@ -10,6 +12,12 @@ const Users: NextPage = () => {
   const t = useTranslations("users");
 
   const users = api.user.getAll.useQuery();
+
+  const setRole = api.user.setRole.useMutation();
+
+  const handleRoleChange = (userId: string) => (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRole.mutate({ id: userId, role: parseRole(e.target.value)});
+  };
 
   return (
     <>
@@ -25,7 +33,12 @@ const Users: NextPage = () => {
           <div>
             {users.data?.map((user) => (
               <div key={user.id}>
-                {user.name} ({user.role})
+                {user.name}
+                <select defaultValue={user.role} onChange={handleRoleChange(user.id)}>
+                  {Object.values(Role).map((role) => (
+                    <option key={role} value={role}>{t(role)}</option>
+                  ))}
+                </select>
               </div>
             ))}
           </div>
@@ -37,11 +50,10 @@ const Users: NextPage = () => {
 
 export default Users;
 
-export async function getStaticProps({locale}: {locale: string}) {
+export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      messages: (await import(`translations/${locale}.json`)).default
-    }
+      messages: (await import(`translations/${locale}.json`)).default,
+    },
   };
 }
-
