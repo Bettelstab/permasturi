@@ -9,6 +9,12 @@
     "contact": "Contacto"
   },
   "users": {
-    "title": "Usuarios"
+    "title": "Usuarios",
+    "name": "Nombre",
+    "role": "Rol",
+    "email": "Correo electrónico",
+    "User": "Usuario",
+    "Admin": "Administrador",
+    "Owner": "Propietario"
   }
 }

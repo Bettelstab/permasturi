@@ -15,6 +15,12 @@
     "es": "Español"
   },
   "users": {
-    "title": "Users"
+    "title": "Users",
+    "role": "Role",
+    "name": "Name",
+    "email": "Email",
+    "User": "User",
+    "Admin": "Admin",
+    "Owner": "Owner"
   }
 }
