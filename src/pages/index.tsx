@@ -3,10 +3,12 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
+import Image from "next/image";
 
 import Navigation from "lib/layout/Navigation";
 import { api } from "utils/api";
-import Link from "next/link";
+import olivo from "images/olivo.jpeg";
 
 const Home: NextPage = () => {
   const t = useTranslations("home");
@@ -22,12 +24,21 @@ const Home: NextPage = () => {
       </Head>
       <Navigation />
       <main className={styles.main}>
+        <div className={styles.hero}>
+          <Image
+            className={styles.heroImage}
+            src={olivo}
+            alt="Olive tree at Permasturi"
+            fill
+          />
+        </div>
         <div className={styles.container}>
-          <h1 className={styles.title}>
-            {t("title")}
-          </h1>
-          <div>
-            {t("example")}
+          <h1 className={styles.title}>{t("title")}</h1>
+          <div>{t("example")}</div>
+          <div className={styles.volunteersContainer}>
+            <h2>{t("volunteersTitle")}</h2>
+            <div>{t("volunteersText")}</div>
+            <Link href="/contact">{t("contact")}</Link>
           </div>
           <div className={styles.showcaseContainer}>
             <p className={styles.showcaseText}>
@@ -48,7 +59,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (
@@ -70,10 +81,10 @@ const AuthShowcase: React.FC = () => {
   );
 };
 
-export async function getStaticProps({locale}: {locale: string}) {
+export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      messages: (await import(`translations/${locale}.json`)).default
-    }
+      messages: (await import(`translations/${locale}.json`)).default,
+    },
   };
 }

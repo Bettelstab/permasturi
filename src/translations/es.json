@@ -1,7 +1,10 @@
 {
   "home": {
     "title": "Bienvenido a Permasturi",
-    "example": "Este es un texto de ejemplo."
+    "example": "Este es un texto de ejemplo.",
+    "volunteersTitle": "Voluntarios",
+    "volunteersText": "Estamos buscando voluntarios para ayudar a construir el proyecto Permasturi. Si estás interesado, por favor, contacta con nosotros.",
+    "contact": "Contacto"
   },
   "navigation": {
     "home": "Inicio",

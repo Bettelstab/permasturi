@@ -1,7 +1,10 @@
 {
   "home": {
     "title": "Welcome to Permasturi",
-    "example": "This is an example text."
+    "example": "This is an example text.",
+    "volunteersTitle": "Volunteers",
+    "volunteersText": "We are looking for volunteers to help us with the project. If you are interested, please contact us.",
+    "contact": "Contact"
   },
   "navigation": {
     "home": "Home",

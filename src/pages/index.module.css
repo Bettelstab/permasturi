@@ -138,3 +138,18 @@
 .loginButton:hover {
   background-color: rgb(255 255 255 / 0.2);
 }
+
+.hero {
+  position: relative;
+  --width: 95vw;
+  width: var(--width);
+  height: calc(95vh - 21px);
+  max-height: calc(var(--width) * 1.6);
+  min-height: calc(var(--width) * 0.78);
+}
+
+.heroImage {
+  object-fit: cover;
+  filter: grayscale(5%) contrast(110%);
+
+}
