@@ -2,12 +2,14 @@ import LanguageSwitcher from "lib/languageSwitcher";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
+import styles from "./Navigation.module.css";
+
 export default () => {
   const t = useTranslations("navigation");
 
   return (
     <nav>
-      <ul>
+      <ul className={styles.list}>
         <li>
           <Link href="/">🏠</Link>
         </li>
